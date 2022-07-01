@@ -2,7 +2,7 @@ import User from '../models/User.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
-export const register = async (req, res) => {
+export const register = async (req, res, next) => {
   try {
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(req.body.password, salt);
@@ -16,8 +16,7 @@ export const register = async (req, res) => {
     await newUser.save();
     res.status(200).json({message: 'User has been created'})
   } catch (error) {
-    res.status(500).json({ message: "Something went wrong" });
-    console.log(error);
+    next(error);
   }
 }
 
@@ -33,7 +32,6 @@ export const login = async (req, res) => {
 
     res.cookie('access_token', token, {httpOnly: true}).status(200).json(oldUser)
   } catch (error) {
-    res.status(500).json({ message: "Something went wrong" });
-    console.log(error);
+    next(error);
   }
 }
