@@ -93,8 +93,8 @@ const List = () => {
             <button>Search</button>
           </div>
           <div className="listResult">
-            {data.map((item,i) => (
-              <SearchItem item={item} key={i}/>
+            {data.map(item => (
+              <SearchItem item={item} key={item._id}/>
             ))}
           </div>
         </div>
