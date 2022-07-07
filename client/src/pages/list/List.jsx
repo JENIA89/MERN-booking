@@ -14,10 +14,12 @@ const List = () => {
   const [date, setDate] = useState(location.state.date);
   const [openDate, setOpenDate] = useState(false);
   const [options, setOptions] = useState(location.state.options);
-  const { data, loading, error } = useFetch(`/hotels?city=${destination}`);
+  const [minPrice, setMinPrice] = useState(undefined);
+  const [maxPrice, setMaxPrice] = useState(undefined);
+  const { data, loading, error, reFetch } = useFetch(`/hotels?city=${destination}&min=${minPrice || 0}&max=${maxPrice || 999}`);
 
-  if(loading) {
-    return 'Loading please wait'
+  const handleClick = () => {
+    reFetch()
   }
 
   return (
@@ -53,13 +55,13 @@ const List = () => {
                   <span className="lsOptionText">
                     Min price <small>per night</small>
                   </span>
-                  <input type="number" className="lsOptionInput" />
+                  <input type="number" onChange={e => setMinPrice(e.target.value)} className="lsOptionInput" />
                 </div>
                 <div className="lsOptionItem">
                   <span className="lsOptionText">
                     Max price <small>per night</small>
                   </span>
-                  <input type="number" className="lsOptionInput" />
+                  <input type="number" onChange={e => setMaxPrice(e.target.value)} className="lsOptionInput" />
                 </div>
                 <div className="lsOptionItem">
                   <span className="lsOptionText">Adult</span>
@@ -90,12 +92,18 @@ const List = () => {
                 </div>
               </div>
             </div>
-            <button>Search</button>
+            <button onClick={handleClick}>Search</button>
           </div>
           <div className="listResult">
+            {loading
+            ?
+            'Loading...'
+            : <>
             {data.map(item => (
               <SearchItem item={item} key={item._id}/>
             ))}
+            </>
+            }
           </div>
         </div>
       </div>
