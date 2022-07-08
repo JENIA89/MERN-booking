@@ -15,6 +15,7 @@ import { useLocation } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import { useContext } from "react";
 import { SearchContext } from "../../context/SearchContext";
+import { dayDifference } from "../../utils/countDays";
 
 const Hotel = () => {
   const location = useLocation();
@@ -22,10 +23,8 @@ const Hotel = () => {
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
   const { data, loading, error, reFetch } = useFetch(`/hotels/find/${id}`);
-  const {dates} = useContext(SearchContext);
-
-  console.log(dates);
-
+  const {dates, options} = useContext(SearchContext);
+  const days = dayDifference(dates[0].endDate, dates[0].startDate);
   const handleOpen = (i) => {
     setSlideNumber(i);
     setOpen(true);
@@ -102,13 +101,13 @@ const Hotel = () => {
               <p className="hotelDesc">{data.desc}</p>
             </div>
             <div className="hotelDetailsPrice">
-              <h1>Perfect for a 9-night stay!</h1>
+              <h1>Perfect for a {days}-night stay!</h1>
               <span>
                 Located in the real heart of Krakow, this property has an
                 excellent location score of 9.8!
               </span>
               <h2>
-                <b>$945</b> (9 nights)
+                <b>${days * data.cheapestPrice * options.room}</b> ({days} nights)
               </h2>
               <button>Reserve or Book Now!</button>
             </div>
