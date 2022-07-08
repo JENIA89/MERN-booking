@@ -7,7 +7,7 @@ const FeaturedProperties = () => {
   if(loading) {
     return 'Loadingplease wait'
   }
-  console.log(data);
+  
   return (
     <div className="fp">
       {data?.map((item, i) => (
