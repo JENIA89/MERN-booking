@@ -26,7 +26,7 @@
   border-radius: 5px;
 }
 
-.lButton:disabled{
+.lButton:disabled {
   background-color: #0071c28c;
   cursor: not-allowed;
 }
