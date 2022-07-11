@@ -11,20 +11,26 @@ import {
   faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import { useContext } from "react";
 import { SearchContext } from "../../context/SearchContext";
 import { dayDifference } from "../../utils/countDays";
+import { AuthContext } from "../../context/AuthContext";
+import Reserve from "../../components/reserve/Reserve";
 
 const Hotel = () => {
   const location = useLocation();
   const id = location.pathname.split('/')[2];
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
-  const { data, loading, error, reFetch } = useFetch(`/hotels/find/${id}`);
+  const [openModal, setOpenModal] = useState(false);
+  const { data, loading, error } = useFetch(`/hotels/find/${id}`);
   const {dates, options} = useContext(SearchContext);
-  const days = dayDifference(dates[0].endDate, dates[0].startDate);
+  const {user} = useContext(AuthContext);
+  const navigate = useNavigate();
+  const days = dayDifference(dates[0]?.endDate, dates[0]?.startDate);
+
   const handleOpen = (i) => {
     setSlideNumber(i);
     setOpen(true);
@@ -41,6 +47,14 @@ const Hotel = () => {
 
     setSlideNumber(newSlideNumber)
   };
+
+  const handleClick = () => {
+    if(user) {
+      setOpenModal(true);
+    } else {
+      navigate("/login");
+    }
+  }
 
   return (
     <div>
@@ -109,13 +123,15 @@ const Hotel = () => {
               <h2>
                 <b>${days * data.cheapestPrice * options.room}</b> ({days} nights)
               </h2>
-              <button>Reserve or Book Now!</button>
+              <button onClick={handleClick}>Reserve or Book Now!</button>
             </div>
           </div>
         </div>
         <MailList />
         <Footer />
-      </div>)}
+      </div>
+      )}
+      {openModal && <Reserve setOpen={setOpenModal} hotelId={id} />}
     </div>
   );
 };
