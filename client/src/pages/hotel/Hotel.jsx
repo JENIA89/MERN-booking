@@ -15,7 +15,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import { useContext } from "react";
 import { SearchContext } from "../../context/SearchContext";
-import { dayDifference } from "../../utils/countDays";
+import { dayDifference } from "../../utils/date";
 import { AuthContext } from "../../context/AuthContext";
 import Reserve from "../../components/reserve/Reserve";
 
