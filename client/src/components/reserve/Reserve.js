@@ -10,7 +10,13 @@ const Reserve = ({setOpen, hotelId}) => {
   const [selectedRooms, setSelectedRooms] = useState([]);
   const {dates, options} = useContext(SearchContext);
   const { data, loading, error } = useFetch(`/hotels/room/${hotelId}`);
+  const allDates = getDatesInRange(dates[0]?.startDate, dates[0]?.endDate);
   
+  const isAvailable = (roomNumber) => {
+    const isFound = roomNumber?.unavailable?.some(date => 
+      allDates.includes(new Date(date).getTime()))
+      return !isFound;
+  }
 
   const handleSelect = (e) => {
     const checked = e.target.checked;
@@ -22,10 +28,14 @@ const Reserve = ({setOpen, hotelId}) => {
     )
   }
 
-  const handleClick = () => {
-
+  const handleClick = async () => {
+    try {
+      
+    } catch (error) {
+      
+    }
   }
-console.log(getDatesInRange(dates[0]?.startDate, dates[0]?.endDate));
+
   return (
     <div className='reserve'>
       <div className='rContainer'>
@@ -43,12 +53,19 @@ console.log(getDatesInRange(dates[0]?.startDate, dates[0]?.endDate));
                 <div className='rMax'>Max people: <b>{item.maxPeople}</b></div>
                 <div className='rPrice'>{item.price}</div>
               </div>
-              {item.roomNumbers.map(roomNumber => (
-                <div className='room' key={roomNumber._id}>
-                  <label>{roomNumber.number}</label>
-                  <input type='checkbox' value={roomNumber._id} onChange={handleSelect}/>
-                </div>
-              ))}
+              <div className='rSelectRooms'>
+                {item.roomNumbers.map(roomNumber => (
+                  <div className='room' key={roomNumber._id}>
+                    <label>{roomNumber.number}</label>
+                    <input
+                      type='checkbox'
+                      value={roomNumber._id}
+                      onChange={handleSelect}
+                      disabled={!isAvailable(roomNumber)}
+                      />
+                  </div>
+                ))}
+              </div>
             </div>
           ))}
           <button onClick={handleClick} className='rButton'>Reserve Now!</button>

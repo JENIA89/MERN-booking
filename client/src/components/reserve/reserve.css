@@ -36,6 +36,7 @@
   gap: 5px;
 }
 
+.rPrice,
 .rTitle {
   font-weight: 500;
 }
@@ -48,11 +49,7 @@
   font-size: 12px;
 }
 
-.rPrice {
-  font-weight: 500;
-}
-
-.rSelectRooms{
+.rSelectRooms {
   display: flex;
   flex-wrap: wrap;
   gap: 5px;
@@ -60,7 +57,7 @@
   color: gray;
 }
 
-.room{
+.room {
   display: flex;
   flex-direction: column;
 }
@@ -75,4 +72,8 @@
   border-radius: 5px;
   width: 100%;
   margin-top: 20px;
+}
+
+input[type=checkbox] {
+  cursor: pointer;
 }
