@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import './reserve.css';
@@ -5,15 +6,17 @@ import useFetch from '../../hooks/useFetch';
 import { useContext, useState } from 'react';
 import { SearchContext } from '../../context/SearchContext';
 import { getDatesInRange } from '../../utils/date';
+import axios from 'axios';
 
 const Reserve = ({setOpen, hotelId}) => {
   const [selectedRooms, setSelectedRooms] = useState([]);
-  const {dates, options} = useContext(SearchContext);
-  const { data, loading, error } = useFetch(`/hotels/room/${hotelId}`);
+  const navigate = useNavigate();
+  const {dates} = useContext(SearchContext);
+  const {data} = useFetch(`/hotels/room/${hotelId}`);
   const allDates = getDatesInRange(dates[0]?.startDate, dates[0]?.endDate);
   
   const isAvailable = (roomNumber) => {
-    const isFound = roomNumber?.unavailable?.some(date => 
+    const isFound = roomNumber?.unavailableDates?.some(date => 
       allDates.includes(new Date(date).getTime()))
       return !isFound;
   }
@@ -30,9 +33,14 @@ const Reserve = ({setOpen, hotelId}) => {
 
   const handleClick = async () => {
     try {
-      
+      await Promise.all(selectedRooms.map(roomId => {
+        const res = axios.put(`/rooms/availability/${roomId}`, {dates: allDates});
+        return res.data;
+      }));
+      setOpen(false);
+      navigate('/');
     } catch (error) {
-      
+      console.log(error);
     }
   }
 
