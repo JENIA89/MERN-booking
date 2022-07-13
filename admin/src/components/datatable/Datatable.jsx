@@ -1,15 +1,29 @@
 import "./datatable.scss";
 import { DataGrid } from "@mui/x-data-grid";
 import { userColumns, userRows } from "../../datatablesource";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 import useFetch from "../../hooks/useFetch";
+import { useEffect } from "react";
+import axios from "axios";
 
 const Datatable = () => {
-  const { data, loading, error } = useFetch('/users');
+  const [list, setList] = useState([])
+  const location = useLocation();
+  const path = location.pathname.split("/")[1];
+  const { data } = useFetch(`/${path}`);
 
-  const handleDelete = (id) => {
-    // setData(data.filter((item) => item.id !== id));
+  useEffect(() => {
+    setList(data)
+  }, [data])
+
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`/${path}/${id}`)
+      setList(list.filter((item) => item._id !== id));
+    } catch (error) {
+      
+    }
   };
 
   const actionColumn = [
@@ -25,7 +39,7 @@ const Datatable = () => {
             </Link>
             <div
               className="deleteButton"
-              onClick={() => handleDelete(params.row.id)}
+              onClick={() => handleDelete(params.row._id)}
             >
               Delete
             </div>
@@ -44,7 +58,7 @@ const Datatable = () => {
       </div>
       <DataGrid
         className="datagrid"
-        rows={data}
+        rows={list}
         columns={userColumns.concat(actionColumn)}
         pageSize={9}
         rowsPerPageOptions={[9]}
