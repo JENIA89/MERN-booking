@@ -10,7 +10,7 @@ const New = ({ inputs, title }) => {
   const [info, setInfo] = useState({});
 
   const handleChange = (e) => {
-    setInfo(prev => ({...prev, [e.target.id]: e.target.value}))
+    setInfo(prev => ({...prev, [e.target.name]: e.target.value}))
   }
 
   const handleClick = async (e) => {
@@ -68,7 +68,7 @@ const New = ({ inputs, title }) => {
               {inputs.map((input) => (
                 <div className="formInput" key={input.id}>
                   <label>{input.label}</label>
-                  <input onChange={handleChange} id={input.id} type={input.type} placeholder={input.placeholder} />
+                  <input onChange={handleChange} name={input.type} type={input.type} placeholder={input.placeholder} />
                 </div>
               ))}
               <button onClick={handleClick}>Send</button>

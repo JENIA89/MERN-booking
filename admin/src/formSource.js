@@ -1,46 +1,40 @@
 export const userInputs = [
-    {
-      id: 1,
-      label: "Username",
-      type: "text",
-      placeholder: "evgene_dev",
-    },
-    {
-      id: 2,
-      label: "Name and surname",
-      type: "text",
-      placeholder: "Evgene Dev",
-    },
-    {
-      id: 3,
-      label: "Email",
-      type: "mail",
-      placeholder: "evgene@gmail.com",
-    },
-    {
-      id: 4,
-      label: "Phone",
-      type: "text",
-      placeholder: "+1 234 567 89",
-    },
-    {
-      id: 5,
-      label: "Password",
-      type: "password",
-    },
-    {
-      id: 6,
-      label: "Address",
-      type: "text",
-      placeholder: "Minsk pleh street",
-    },
-    {
-      id: 7,
-      label: "Country",
-      type: "text",
-      placeholder: "BLR",
-    },
-  ];
+  {
+    id: "username",
+    label: "Username",
+    type: "text",
+    placeholder: "john_doe",
+  },
+  {
+    id: "email",
+    label: "Email",
+    type: "email",
+    placeholder: "john_doe@gmail.com",
+  },
+  {
+    id: "phone",
+    label: "Phone",
+    type: "text",
+    placeholder: "+1 234 567 89",
+  },
+  {
+    id: "password",
+    label: "Password",
+    type: "password",
+  },
+  {
+    id: "country",
+    label: "Country",
+    type: "text",
+    placeholder: "USA",
+  },
+  {
+    id: "city",
+    label: "City",
+    type: "text",
+    placeholder: "USA",
+  },
+];
   
   export const productInputs = [
     {
