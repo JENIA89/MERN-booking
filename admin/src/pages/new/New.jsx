@@ -10,7 +10,7 @@ const New = ({ inputs, title }) => {
   const [info, setInfo] = useState({});
 
   const handleChange = (e) => {
-    setInfo(prev => ({...prev, [e.target.name]: e.target.value}))
+    setInfo(prev => ({...prev, [e.target.id]: e.target.value}))
   }
 
   const handleClick = async (e) => {
@@ -31,7 +31,7 @@ const New = ({ inputs, title }) => {
       console.log(error);
     }
   }
-  console.log(info);
+
   return (
     <div className="new">
       <Sidebar />
