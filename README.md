@@ -1,5 +1,5 @@
 # MERN-booking project
 
-- Frontend
-- Backend
-- Admin
+- Client (React)
+- Server (Node)
+- Admin (React)
