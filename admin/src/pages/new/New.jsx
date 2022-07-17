@@ -3,11 +3,13 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 
 const New = ({ inputs, title }) => {
   const [file, setFile] = useState("");
   const [info, setInfo] = useState({});
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setInfo(prev => ({...prev, [e.target.id]: e.target.value}))
@@ -25,8 +27,8 @@ const New = ({ inputs, title }) => {
         ...info,
         img: url
       }
-      console.log(newUser, 'newUser');
       await axios.post("/auth/register", newUser);
+      navigate('/users')
     } catch (error) {
       console.log(error);
     }
@@ -68,7 +70,7 @@ const New = ({ inputs, title }) => {
               {inputs.map((input) => (
                 <div className="formInput" key={input.id}>
                   <label>{input.label}</label>
-                  <input onChange={handleChange} name={input.type} type={input.type} placeholder={input.placeholder} />
+                  <input onChange={handleChange} id={input.id} type={input.type} placeholder={input.placeholder} />
                 </div>
               ))}
               <button onClick={handleClick}>Send</button>

@@ -23,7 +23,7 @@ const Login = () => {
       const response = await axios.post('/auth/login', credentials);
       if(response.data.isAdmin) {
         dispatch({type: 'LOGIN_SUCCESS', payload: response.data.details});
-      navigate('/');
+        navigate('/');
       } else {
         dispatch({type: 'LOGIN_FAILURE', payload: {message: 'You are not allowed!'}})
       }
