@@ -1,14 +1,15 @@
-import "./newHotel.scss";
-import Sidebar from "../../components/sidebar/Sidebar";
-import Navbar from "../../components/navbar/Navbar";
-import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import axios from "axios";
+import "./newHotel.scss";
+import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { hotelInputs } from "../../formSource";
 import useFetch from "../../hooks/useFetch";
-import axios from "axios";
+import Sidebar from "../../components/sidebar/Sidebar";
+import Navbar from "../../components/navbar/Navbar";
 
-const NewHotel = ({ inputs, title }) => {
+
+const NewHotel = () => {
   const [files, setFiles] = useState("");
   const [info, setInfo] = useState({});
   const [rooms, setRooms] = useState([]);
@@ -16,7 +17,7 @@ const NewHotel = ({ inputs, title }) => {
   const { data, loading, error } = useFetch('/rooms');
 
   const handleChange = (e) => {
-    setInfo(prev => ({...prev, [e.target.id]: e.target.value}))
+    setInfo(prev => ({...prev, [e.target.id]: e.target.value}));
   }
 
   const handleSelect = (e) => {

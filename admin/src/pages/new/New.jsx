@@ -1,10 +1,11 @@
+import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
+import axios from "axios";
 import "./new.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
-import { useState } from "react";
-import { useNavigate } from 'react-router-dom';
-import axios from "axios";
+
 
 const New = ({ inputs, title }) => {
   const [file, setFile] = useState("");
@@ -12,7 +13,7 @@ const New = ({ inputs, title }) => {
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setInfo(prev => ({...prev, [e.target.id]: e.target.value}))
+    setInfo(prev => ({...prev, [e.target.id]: e.target.value}));
   }
 
   const handleClick = async (e) => {
@@ -28,7 +29,7 @@ const New = ({ inputs, title }) => {
         img: url
       }
       await axios.post("/auth/register", newUser);
-      navigate('/users')
+      navigate('/users');
     } catch (error) {
       console.log(error);
     }

@@ -1,3 +1,5 @@
+import { useContext, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./hotel.css";
 import Navbar from "../../components/navbar/Navbar";
 import Header from "../../components/header/Header";
@@ -10,10 +12,7 @@ import {
   faCircleXmark,
   faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
-import { useContext } from "react";
 import { SearchContext } from "../../context/SearchContext";
 import { dayDifference } from "../../utils/date";
 import { AuthContext } from "../../context/AuthContext";
